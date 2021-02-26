@@ -1,0 +1,37 @@
+{
+    "vhosts": [
+      {
+        "name": "/"
+      }
+    ],
+    "users": [
+      {
+        "name": "admin",
+        "password": "admin",
+        "tags": "administrator"
+      }
+    ],
+    "permissions": [
+      {
+        "user":"admin",
+        "vhost":"/",
+        "configure":".*",
+        "write":".*",
+        "read":".*"
+      }
+    ],
+    "policies": [
+      {
+        "name": "ha-all",
+        "apply-to": "all",
+        "definition": {
+          "ha-mode": "all",
+          "ha-sync-mode": "automatic",
+          "ha-sync-batch-size": 100
+        },
+        "pattern": "^erc\.",
+        "priority": 0,
+        "vhost": "/"
+      }
+    ]
+}

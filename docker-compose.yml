@@ -1,0 +1,49 @@
+version: "3"
+services:
+    rabbit1:
+        image: rabbitmq:3-management
+        container_name: rabbit1
+        hostname: rabbit1
+        ports:
+            - 5672:5672
+            - 15672:15672
+        environment:
+            - RABBITMQ_ERLANG_COOKIE=shared_cookie
+        volumes:
+            - $PWD/rabbit1-definitions.json:/etc/rabbitmq/definitions.json:ro
+            - $PWD/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+            - rabbit1-data:/var/lib/rabbitmq
+    rabbit2:
+        image: rabbitmq:3-management
+        container_name: rabbit2
+        hostname: rabbit2
+        ports:
+            - 5673:5672
+            - 15673:15672
+        environment:
+            - RABBITMQ_ERLANG_COOKIE=shared_cookie
+        volumes:
+            - $PWD/rabbit2-definitions.json:/etc/rabbitmq/definitions.json:ro
+            - $PWD/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+            - rabbit2-data:/var/lib/rabbitmq
+        depends_on: 
+          - rabbit1
+    rabbit3:
+        image: rabbitmq:3-management
+        container_name: rabbit3
+        hostname: rabbit3
+        ports:
+            - 5674:5672
+            - 15674:15672
+        environment:
+            - RABBITMQ_ERLANG_COOKIE=shared_cookie
+        volumes:
+            - $PWD/rabbit3-definitions.json:/etc/rabbitmq/definitions.json:ro
+            - $PWD/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+            - rabbit3-data:/var/lib/rabbitmq
+        depends_on: 
+          - rabbit1
+volumes: 
+  rabbit1-data:
+  rabbit2-data:
+  rabbit3-data:
